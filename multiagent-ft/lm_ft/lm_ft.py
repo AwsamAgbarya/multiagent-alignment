@@ -15,8 +15,6 @@
 #    limitations under the License.
 
 import os
-os.environ['TRANSFORMERS_CACHE'] = '/storage/vsub851/.cache'
-os.environ['HF_HOME'] = '/storage/vsub851/.cache'
 import json
 import math
 import pathlib
@@ -37,7 +35,7 @@ from fastchat.model.model_adapter import get_conversation_template
 
 IGNORE_TOKEN_ID = LabelSmoother.ignore_index
 #Huggingface Access Token, don't leak this.
-ACCESS_TOKEN = "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"
+ACCESS_TOKEN = "SET_TOKEN_HERE"
 
 @dataclass
 class ModelArguments:
