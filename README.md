@@ -15,6 +15,12 @@ We include a `requirements.txt` to provide the basic requirements for set-up. To
 
 Set your OpenAI API Key using `export OPENAI_API_KEY=your_api_key_here`.
 
+Create a conda/pip environment and install [Pytorch](https://pytorch.org/).
+Then run
+```
+pip install -r requirements.txt
+```
+
 ### Data
 To download the MATH dataset, follow the steps [here](https://github.com/hendrycks/math/).
 
