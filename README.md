@@ -8,7 +8,7 @@
 [Shuang Li](https://people.csail.mit.edu/lishuang/),
 [Igor Mordatch](https://scholar.google.com/citations?user=Vzr1RukAAAAJ&hl=en)
 
-This is the implementation of our paper "Multiagent Finetuning of Language Models". We design this implementation for the [MATH](https://arxiv.org/pdf/2103.03874) dataset for simplicity. Using other datasets is a requires little modification of the code.
+This is the implementation of our paper "Multiagent Finetuning of Language Models". We design this implementation for the [MATH](https://arxiv.org/pdf/2103.03874) dataset for simplicity. Using other datasets requires little modification of the code.
 
 ## Installation and Setup
 We include a `requirements.txt` to provide the basic requirements for set-up. To do finetuning with open-source language models, we also include a more details set up in the path `multiagent-ft/lm_ft` with a more detailed list of required packages.
