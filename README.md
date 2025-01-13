@@ -1,5 +1,5 @@
-# Multiagent Finetuning of Language Models
-### [Project Page]() | [Paper]()
+# Multiagent Finetuning: Self Improvement with Diverse Reasoning Chains
+### [Project Page](https://llm-multiagent-ft.github.io/) | [Paper](https://arxiv.org/abs/2501.05707)
 
 [Vighnesh Subramaniam](https://vsubramaniam851.github.io/),
 [Yilun Du](https://yilundu.github.io/),
@@ -25,7 +25,7 @@ pip install -r requirements.txt
 To download the MATH dataset, follow the steps [here](https://github.com/hendrycks/math/).
 
 ### Hardware
-We ran all experiments either with GPT-3.5 with the OpenAI API or with open-source language models on four 40GB A100s or 4 H100s. 
+We ran all experiments either with GPT-3.5 with the OpenAI API or with open-source language models on four 40GB A100s or 8 H100s. 
 
 ## Creating Finetuning Data
 To create finetuning data, change directory to the `multiagent-ft` directory and run
@@ -34,15 +34,15 @@ python original_gen.py --agents [AGENTS] --rounds [ROUNDS] --model [MODEL] --sav
 ```
 where `agents` refers to the number of multiagent debate agents, `rounds` refers to the number of rounds of debate, `model` refers to the model to use debate on, and `save_str` refers to the save log. `summarize` is an argument that makes the model summarize responses from other agents. We also include parameters for `top_p` and `temperature` that can be used with the open-source models.
 
-## Generator Finetuning
-To create data for finetuning generator agents, run 
+## Generation Model Finetuning
+To create data for finetuning generation agents, run 
 ```
 python ft_generator.py --file_path [FILE_PATH] --save_path [SAVE_PATH] [--gpt] --iteration [ITERATION]
 ```
 
-This takes in a path for a JSON file and creates the JSON/JSONL files for finetuning. If you include the `--gpt` flag, it will use the OpenAI API for finetuning assuming the goal is to finetuning GPT-3.5. You can track which iteration of finetuning you're applying using the `--iteration` flag. You also can pass in the GPT model IDs to finetuning using the `model_ids` flag.
+This takes in a path for a JSON file and creates the JSON/JSONL files for finetuning. If you include the `--gpt` flag, it will use the OpenAI API for finetuning assuming the goal is to finetune GPT-3.5. You can track which iteration of finetuning you're applying using the `--iteration` flag. You also can pass in the GPT model IDs to finetuning using the `model_ids` flag.
 
-## Critic Finetuning
+## Critic Model Finetuning
 Similar to generator finetuning. Run
 ```
 python ft_critic.py --file_path [FILE_PATH] --save_path [SAVE_PATH] [--gpt] --iteration [ITERATION]
