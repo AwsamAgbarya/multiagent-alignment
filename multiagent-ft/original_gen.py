@@ -189,7 +189,7 @@ if __name__ == "__main__":
                         agent_contexts_other = agent_contexts[:i] + agent_contexts[i+1:]
                         random.shuffle(agent_contexts_other)
                         summary = summarize_message(agent_contexts_other[:5], model = args.model, hf_model = hf_model, tokenizer = tokenizer, 
-                                                        device = device, gpt_ft = args.gptft, temperature= args.temperature, top_p = args.top_p)
+                                                        device = device, temperature= args.temperature, top_p = args.top_p)
                         print(summary)
                         message = construct_message_summary(summary, question, 2 * round - 1)
                     else:
@@ -199,7 +199,7 @@ if __name__ == "__main__":
                     agent_context.append(message)
 
                 completion = generate_answer(agent_context, model = args.model, hf_model = hf_model, tokenizer = tokenizer, 
-                                                device = device, gpt_ft = args.gptft, temperature= args.temperature, top_p = args.top_p)
+                                                device = device, temperature= args.temperature, top_p = args.top_p)
 
                 assistant_message = construct_assistant_message(completion)
                 agent_context.append(assistant_message)

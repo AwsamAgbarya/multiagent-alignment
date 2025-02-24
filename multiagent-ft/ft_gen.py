@@ -218,7 +218,7 @@ if __name__ == "__main__":
     generated_description = {}
     summarize = args.summarize
 
-    for problem, data in tqdm(enumerate(hard_problems[:500]), desc = "Fine-tuned Generation on MATH"):
+    for problem, data in tqdm(enumerate(hard_problems[500:1000]), desc = "Fine-tuned Generation on MATH"):
         question = data["problem"]
         answer = data["solution"]
 
