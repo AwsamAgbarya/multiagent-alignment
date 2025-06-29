@@ -1,0 +1,28 @@
+# Enforce Multiple choice question format
+template_format_mc = """
+Your response will consist of two parts: an EXPLANATION followed by your selected CHOICE.
+First, provide a clear EXPLANATION that details the reasoning used to arrive at the correct answer.
+After providing your EXPLANATION, you must provide your selected CHOICE following this format: 
+
+\\boxed{{Your CHOICE here}}
+for example:
+\\boxed{{B) The color of the sky is blue.}}
+"""
+
+
+# Intructions promps per dataset
+template_instruction_logiqa = """You will be presented with a CONTEXT passage and a corresponding QUESTION with four answer CHOICES. 
+Carefully read the passage to understand its content. Then, read the QUESTION and CHOICES thoroughly.
+"""
+
+template_instruction_arc_challenge = """You will be presented a QUESTION with multiple answer CHOICES.
+Carefully read the QUESTION and CHOICES. 
+"""
+
+template_instruction_aqua_rat = """You will be given a QUESTION along with multiple answer CHOICES, involving a math problem that requires step-by-step reasoning to determine the correct answer.
+Carefully read the QUESTION and CHOICES. 
+"""
+
+template_instruction_openbookqa = """You will be presented a QUESTION with multiple answer CHOICES.
+Carefully read the QUESTION and CHOICES. 
+"""

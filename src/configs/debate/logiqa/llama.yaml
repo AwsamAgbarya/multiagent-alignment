@@ -1,0 +1,46 @@
+# @package _global_
+
+# Override Experiment settings
+experiment:
+  name: llama_logiqa_debate_testbatch
+  description: "Configuration for the initial debate phase using llama on logiqa"
+  debug: false
+
+# Override Debate configuration
+debate:
+  agents: 3
+  rounds: 1
+  summarize: true
+
+# Override Model configuration
+model:
+  name: "llama"
+  path: /ds/models/llms/Meta-Llama-3-8B-Instruct
+  temperature: 1.0
+  top_p: 0.9
+
+# Override Dataset configuration
+dataset:
+  name: logiqa
+  path: /ds/text/faithfulness/
+  format: "multiple_choice"
+  split: train
+  max_rows: 1
+
+# Extra parameters
+training:
+  max_seq_length: 2048
+  batch: 8
+  batching_scheme: "batch" # Can be "batch", "duplicate" or "" if not batched
+  device: 0
+  vllm: true
+  vllm_mem: 0.6
+
+# User's username directory
+user:
+  name: aagbaria
+
+# Hydra configuration
+hydra:
+  run:
+    dir: /netscratch/${user.name}/multiagent-alignment/outputs/${model.name}/debate/${dataset.name}/

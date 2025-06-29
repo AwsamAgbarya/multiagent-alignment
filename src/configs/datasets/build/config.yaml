@@ -1,0 +1,73 @@
+# Default configuration file for generator SFT dataset creation
+
+# Experiment settings
+experiment:
+  name: Default_dataset_extraction
+  description: "Default configuration for the extraction of datasets for agents"
+  debug: false
+  iteration: 1
+
+# Dataset configuration
+dataset:
+  name: logiqa
+  input:
+    name: null  # Will be overridden by dataset-specific configs
+    path: null  # Will be overridden by dataset-specific configs
+    num_of_generators: null # Will be overridden by dataset-specific configs
+    max_rows: null # Will be overridden by dataset-specific configs
+    format: multiple_choice
+    type: QA
+  output:
+    path: null  # Will be overridden by dataset-specific configs
+    max_rows: null # Will be overridden by dataset-specific configs
+
+# Model ids
+model:
+  name: llama
+  ids:
+    - id1
+    - id2
+    - id3
+
+# Hydra configuration
+hydra:
+  run:
+    dir: /netscratch/${user.name}/multiagent-alignment/outputs/${model.name}/debate/${dataset.name}/
+
+# User's username directory
+user:
+  name: aagbaria
+
+# Optional parameters 
+logging:
+  level: INFO
+  save_outputs: true
+  log_frequency: 1  # Log every n steps
+
+gpt_style: false
+
+# Extra training parameters
+training_config:
+  # Examples
+  # output_dir: "./"
+  # num_train_epochs: 1
+  # max_seq_length: 2048
+  # prompt_length: 516
+  # per_device_train_batch_size: 4
+  # per_device_eval_batch_size: 1
+  # gradient_accumulation_steps: 4
+  # gradient_checkpointing: False 
+  # optim: "adamw_torch_fused"
+  # learning_rate: 5e-6
+  # max_grad_norm: 1
+  # warmup_ratio: 0.1
+  # lr_scheduler_type: "cosine"
+  # logging_steps: 4
+  # save_steps: 4
+  # save_total_limit: 1
+  # evaluation_strategy: "steps"
+  # eval_steps: 4
+  # bf16: True
+  # tf32: True
+  # push_to_hub: False
+  # gradient_checkpointing_use_reentrant: False

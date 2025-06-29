@@ -1,0 +1,76 @@
+# Default configuration file for initial debate phase
+
+# Experiment settings
+experiment:
+  name: default_debate
+  description: "Default configuration for the initial debate phase"
+  debug: false
+
+# Debate configuration
+debate:
+  agents: null  # Required parameter to be overridden in specific configs
+  rounds: null  # Required parameter to be overridden in specific configs
+  summarize: false
+
+# Model configuration
+model:
+  name: "llama_dummy"
+  temperature: 1.0
+  top_p: 0.9
+  device: 0
+  vllm: true
+  vllm_mem: 0.3
+
+# Dataset configuration
+dataset:
+  name: null  # Will be overridden by dataset-specific configs
+  path: null  # Will be overridden by dataset-specific configs
+  format: null # Will be overridden by dataset-specific configs
+  split: null # Will be overridden by dataset-specific configs
+  max_rows: null # Will be overridden by dataset-specific configs
+
+# Hydra configuration
+hydra:
+  run:
+    dir: /netscratch/${user.name}/multiagent-alignment/outputs/${model.name}/debate/${dataset.name}/
+
+# User's username directory
+user:
+  name: aagbaria
+
+# Optional parameters 
+logging:
+  level: INFO
+  save_outputs: true
+  log_frequency: 1  # Log every n steps
+
+# Extra training parameters
+training:
+  max_seq_length: 2048
+  batch: 8
+  batching_scheme: "batch" # Can be "batch", "duplicate" or "" if not batched
+  # device: 0
+  # vllm: true
+  # vllm_mem: 0.3
+  # Examples
+  # output_dir: "./"
+  # num_train_epochs: 1
+  # prompt_length: 516
+  # per_device_train_batch_size: 4
+  # per_device_eval_batch_size: 1
+  # gradient_accumulation_steps: 4
+  # gradient_checkpointing: False 
+  # optim: "adamw_torch_fused"
+  # learning_rate: 5e-6
+  # max_grad_norm: 1
+  # warmup_ratio: 0.1
+  # lr_scheduler_type: "cosine"
+  # logging_steps: 4
+  # save_steps: 4
+  # save_total_limit: 1
+  # evaluation_strategy: "steps"
+  # eval_steps: 4
+  # bf16: True
+  # tf32: True
+  # push_to_hub: False
+  # gradient_checkpointing_use_reentrant: False
