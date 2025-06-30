@@ -43,7 +43,7 @@ class DataProcessingDebate():
         self.cot= cot
 
         self.tokenizer = AutoTokenizer.from_pretrained(
-            self.config.model.path, 
+            self.config.model.path
         )
         self.tokenizer.add_special_tokens({"pad_token": "<|pad|>"})
         self.tokenizer.padding_side = "right"

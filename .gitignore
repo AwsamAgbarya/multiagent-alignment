@@ -1,2 +1,8 @@
 .code-server/
 *.ipynb
+datasets/
+models/
+*/__pychache__/
+*.pyc
+src/llama_logiqa_debate_testbatch.json
+*.DS_Store
