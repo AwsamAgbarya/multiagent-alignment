@@ -139,7 +139,7 @@ class Debate():
             completion = {"choices": [{"message": {"role": "assistant", "content": completion}}]}
         return completion
 
-    def generate_batched(self, input_dataset, batch_size, name):
+    def generate_batched(self, input_dataset, batch_size, name, duplicates=False):
         '''
         Takes in a preprocessed dataset that has text attribute which holds the prompt, and token_count which holds the token count of the text.
         Unlike generate, this function takes in a DataLoader object with batch_size, and tries to pass them in batches to the model.
@@ -152,7 +152,6 @@ class Debate():
         for data in tqdm(dataset):
             # N_agents x batch_size x N_messages
             agents_contexts = [[[{"role": "user", 'content':data['text'][i], 'len':data['token_count'][i].item()}] for i in range(len(data['index']))] for __ in range(self.agents)]
-            # print(f"Agent contexts: \n{agents_contexts}")
             for round in range(self.rounds):
                 for i, agent_contexts in enumerate(agents_contexts):
                     if round!=0:
@@ -160,25 +159,21 @@ class Debate():
                         random.shuffle(agent_contexts_other)
                         if self.summarize:
                             # Summarize 5 random agent contexts as input
-                            # print(f"Trying to summarize \n{agent_contexts_other[:5]}")
                             summary = self.summarize_message(agent_contexts_other[:5],round,in_batches=True) # Array of string summaries
-                            # print(f"Recieved summary: \n{summary}")
                             messages = construct_message_summary(summary, data["question"], in_batches=True) # Array of dictionary summaries
-                            # print(f"Constructed message: \n{messages}")
                         else:
                             # List 5 random agent contexts as input
                             messages = construct_message(agent_contexts_other[:5], data["question"], 2 * round - 1, in_batches=True) # Array of dictonary messages
                         for j,agent in enumerate(agent_contexts):
                             agent.append(messages[j]) # Append each entry in the batch's summary message to that batch's context
-                            # print(f"Current agent context: \n{agent}")
                     completion = self.generate_answer_batched(agent_contexts)
                     assistant_message = construct_assistant_message(completion, in_batches=True)
                     for j, batch_context in enumerate(agent_contexts):
                         batch_context.append(assistant_message[j])
-                        # print(f"Added \n{assistant_message[j]}\n of {j}th place to agent context {j}\n{agent_contexts}")
-            for j, batch_context in enumerate(agents_contexts):
-                generated_description[data['index'][j].item()] = (batch_context,  data["answer"][j])
-                # print(f"Added to generated description for index {data['index'][j].item()}: \n{batch_context} with answer {data['answer'][j]} of place {j}")
+            for j in range(len(data["answer"])):
+                for agent in agents_contexts:
+                    name_idx = str(data['index'][j].item())+f'_{j}' if duplicates else str(data['index'][j].item())
+                    generated_description[name_idx] = (agent[j],  data["answer"][j])
         json.dump(generated_description, open(f"{name}.json", "w"))
         self.logger.info(f"Dataset saved to {os.getcwd()}")
 
@@ -195,7 +190,6 @@ class Debate():
                 input_length = max([context[0]['len']+self.max_len for context in answer_context])
             else:
                 encoded = self.tokenizer(input_text, return_tensors="pt", padding=True, truncation=True)
-                # print(encoded['input_ids'].shape)
                 input_length = encoded['input_ids'].shape[1] + self.max_len
             sampling_params = SamplingParams(
                 max_tokens = input_length,
@@ -210,9 +204,8 @@ class Debate():
         return completion
         
     def sample(self, input_dataset, batch_size, name):
-        # print(input_dataset)
-        input_dataset = [{"index": b['index'], "text":b['text'], "token_count":b['token_count']} for b in input_dataset for __ in range(batch_size)]
-        self.generate_batched(input_dataset, batch_size, name)
+        input_dataset = [{"index": b['index'], "question":b['question'], "text":b['text'], "token_count":b['token_count'], "answer": b['answer']} for b in input_dataset for __ in range(batch_size)]
+        self.generate_batched(input_dataset, batch_size, name, duplicates=True)
 
     def summarize_message(self, agent_contexts, round=0, in_batches=False):
         prefix_string = "Here are a list of opinions from different agents: "
